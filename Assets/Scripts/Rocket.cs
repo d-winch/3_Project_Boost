@@ -13,6 +13,8 @@ public class Rocket : MonoBehaviour
     [SerializeField] float rocketThrust = 100f;
     [SerializeField] bool hardcoreMode;
 
+    [SerializeField] float levelDelay = 2f;
+
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip explosion;
     [SerializeField] AudioClip success;
@@ -28,16 +30,16 @@ public class Rocket : MonoBehaviour
     enum State { Alive, Dying, Transcending };
     State state = State.Alive;
 
-    private Vector3 initialPosition;
-    private Quaternion initialRotation;
+    //private Vector3 initialPosition;
+    //private Quaternion initialRotation;
 
     // Use this for initialization
     void Start ()
    {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        initialPosition = transform.position;
-        initialRotation = transform.rotation;
+        //initialPosition = transform.position;
+        //initialRotation = transform.rotation;
     }
 	
 	// Update is called once per frame
@@ -82,7 +84,7 @@ public class Rocket : MonoBehaviour
         Instantiate(destroyedRocket, transform.position, transform.rotation);
         transform.position = new Vector3(0, 1000, 0);
         rigidBody.velocity = Vector3.zero;
-        Invoke("Death", 2f); // paramaterise time
+        Invoke("Death", levelDelay);
     }
 
     private void StartSuccessSequence()
@@ -91,8 +93,9 @@ public class Rocket : MonoBehaviour
         state = State.Transcending;
         audioSource.Stop();
         audioSource.PlayOneShot(success);
+        mainEngineParticles.Stop();
         successParticles.Play();
-        Invoke("LoadNextScene", 2f); // paramaterise time
+        Invoke("LoadNextScene", levelDelay);
     }
 
     private void Death()
@@ -141,7 +144,7 @@ public class Rocket : MonoBehaviour
     {
         rigidBody.freezeRotation = true; // Take manual control of rotation
 
-        float rotationThisFrame = rcsThrust + Time.deltaTime;
+        float rotationThisFrame = rcsThrust * Time.deltaTime;
 
         if (Input.GetKey(KeyCode.A))
         {
