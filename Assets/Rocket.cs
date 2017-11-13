@@ -23,6 +23,8 @@ public class Rocket : MonoBehaviour
     Rigidbody rigidBody;
     AudioSource audioSource;
 
+    static int level = 0;
+
     enum State { Alive, Dying, Transcending };
     State state = State.Alive;
 
@@ -101,7 +103,8 @@ public class Rocket : MonoBehaviour
     private void LoadNextScene()
     {
         state = State.Alive;
-        SceneManager.LoadScene(1); // todo allow for more than two levels
+        level++;
+        SceneManager.LoadScene(level); // todo allow for more than two levels
     }
 
     private void RespondToThrustInput()
@@ -126,7 +129,7 @@ public class Rocket : MonoBehaviour
     private void ApplyThrust()
     {
         Debug.Log("Thrusting");
-        rigidBody.AddRelativeForce(Vector3.up * rocketThrust);
+        rigidBody.AddRelativeForce(Vector3.up * rocketThrust * Time.deltaTime);
         if (!audioSource.isPlaying) // Prevent Layer
         {
             audioSource.PlayOneShot(mainEngine);

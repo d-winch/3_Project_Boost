@@ -533,7 +533,7 @@ MonoBehaviour:
   destroyedRocket: {fileID: 1691075603442154, guid: 4919fd73f52ab144198c74ee352222fb,
     type: 2}
   rcsThrust: 6.59
-  rocketThrust: 33
+  rocketThrust: 2483.92
   hardcoreMode: 0
   mainEngine: {fileID: 8300000, guid: 973212507412ba24684813b49e108cb0, type: 3}
   explosion: {fileID: 8300000, guid: 686d3a1bbf4b8f74ab69448275c34f6e, type: 3}
