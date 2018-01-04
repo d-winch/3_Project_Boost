@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.5
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 117348659}
-  m_IndirectSpecularColor: {r: 0.32277143, g: 0.36028138, b: 0.41749865, a: 0.5}
+  m_IndirectSpecularColor: {r: 0.32277074, g: 0.3602805, b: 0.41749844, a: 0.5}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -981,8 +981,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5db5ee45bd677eb4699eb0e689ecc195, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.15
+  m_Pitch: 0.4
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -1285,7 +1285,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4514915842567288, guid: 4b536a49f7b5f2e45882f02e96c0a4c6, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -47.8
+      value: -82.81
       objectReference: {fileID: 0}
     - target: {fileID: 4514915842567288, guid: 4b536a49f7b5f2e45882f02e96c0a4c6, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1306,10 +1306,6 @@ Prefab:
     - target: {fileID: 4514915842567288, guid: 4b536a49f7b5f2e45882f02e96c0a4c6, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4514915842567288, guid: 4b536a49f7b5f2e45882f02e96c0a4c6, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b536a49f7b5f2e45882f02e96c0a4c6, type: 2}

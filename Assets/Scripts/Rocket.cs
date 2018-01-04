@@ -12,6 +12,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] float rcsThrust = 5f;
     [SerializeField] float rocketThrust = 100f;
     [SerializeField] bool hardcoreMode;
+    static bool collisions = true;
 
     [SerializeField] float levelDelay = 2f;
 
@@ -24,8 +25,6 @@ public class Rocket : MonoBehaviour
 
     Rigidbody rigidBody;
     AudioSource audioSource;
-
-    static int level = 0;
 
     enum State { Alive, Dying, Transcending };
     State state = State.Alive;
@@ -45,6 +44,16 @@ public class Rocket : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        // Debug keys
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadNextScene();
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            collisions = !collisions;
+        }
+
         if (state == State.Alive)
         {
             RespondToThrustInput();
@@ -70,6 +79,7 @@ public class Rocket : MonoBehaviour
                 StartSuccessSequence();
                 break;
             default:
+                if (!collisions) { return; }
                 StartDeathSequence();
                 break;
         }
@@ -106,8 +116,13 @@ public class Rocket : MonoBehaviour
     private void LoadNextScene()
     {
         state = State.Alive;
-        level++;
-        SceneManager.LoadScene(level); // todo allow for more than two levels
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        int nextScene = currentScene + 1;
+        if (nextScene.Equals(SceneManager.sceneCountInBuildSettings))
+        {
+            nextScene = 0;
+        }
+        SceneManager.LoadScene(nextScene); // todo allow for more than two levels
     }
 
     private void RespondToThrustInput()
@@ -124,9 +139,14 @@ public class Rocket : MonoBehaviour
         }
         else
         {
-            audioSource.Stop();
-            mainEngineParticles.Stop();
+            StopThrust();
         }
+    }
+
+    private void StopThrust()
+    {
+        audioSource.Stop();
+        mainEngineParticles.Stop();
     }
 
     private void ApplyThrust()
@@ -142,7 +162,7 @@ public class Rocket : MonoBehaviour
 
     private void RespondToRotateInput()
     {
-        rigidBody.freezeRotation = true; // Take manual control of rotation
+        rigidBody.angularVelocity = Vector3.zero; // Remove rotation from physics
 
         float rotationThisFrame = rcsThrust * Time.deltaTime;
 
@@ -153,12 +173,11 @@ public class Rocket : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            Debug.Log("Turning Right"); 
+            Debug.Log("Turning Right");
             transform.Rotate(-Vector3.forward * rotationThisFrame);
         }
-
-        rigidBody.freezeRotation = false; // Resume physics control of rotation
-        rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionZ;
+        //rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionZ;
+        rigidBody.constraints = RigidbodyConstraints.FreezePositionZ;
     }
 
 }
